@@ -1,0 +1,43 @@
+[
+    {
+        "id": "1",
+        "name": "Parking 1",
+        "freeSlots": "1",
+        "address": "Shevchenka 1",
+        "price": 10,
+        "additionalInfo": "N/A"
+    },
+    {
+        "id": "2",
+        "name": "Parking 2",
+        "freeSlots": "51",
+        "address": "Shevchenka 2",
+        "price": 20,
+        "additionalInfo": "N/A"
+    },
+    {
+        "id": "3",
+        "name": "Parking 3",
+        "freeSlots": "15",
+        "address": "Shevchenka 3",
+        "price": 30,
+        "additionalInfo": "N/A"
+    },
+    {
+        "id": "4",
+        "name": "Parking 4",
+        "freeSlots": "52",
+        "address": "Shevchenka 4",
+        "price": 40,
+        "additionalInfo": "N/A"
+    },
+    {
+        "id": "5",
+        "name": "Parking 5",
+        "freeSlots": "25",
+        "address": "Shevchenka 5",
+        "price": 50,
+        "additionalInfo": "N/A"
+    }
+    
+]
