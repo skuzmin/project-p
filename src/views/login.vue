@@ -71,6 +71,7 @@ export default {
                 return;
             }
             localStorage.setItem('p-login', true);
+            this.$root.$emit('login', true);
             this.$router.push('/dashboard');
         },
         validation(user) {
