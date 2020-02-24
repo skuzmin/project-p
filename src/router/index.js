@@ -19,7 +19,33 @@ const routes = [
             }
         },
         component: () =>
-            import(/* webpackChunkName: 'about' */ '../views/login.vue'),
+            import(/* webpackChunkName: 'login' */ '../views/login.vue'),
+    },
+    {
+        path: '/register',
+        name: 'register',
+        beforeEnter: (_to, _from, next) => {
+            if (localStorage.getItem('p-login')) {
+                next('/dashboard');
+            } else {
+                next();
+            }
+        },
+        component: () =>
+            import(/* webpackChunkName: 'login' */ '../views/register.vue'),
+    },
+    {
+        path: '/forgot-password',
+        name: 'forgot-password',
+        beforeEnter: (_to, _from, next) => {
+            if (localStorage.getItem('p-login')) {
+                next('/dashboard');
+            } else {
+                next();
+            }
+        },
+        component: () =>
+            import(/* webpackChunkName: 'login' */ '../views/forgot-password.vue'),
     },
     {
         path: '/dashboard',
@@ -50,11 +76,12 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, _from, next) => {
-    if (!localStorage.getItem('p-login') && to.path !== '/login') {
-        next('/login');
-    } else {
-        next();
-    }
+    next();
+    // if (!localStorage.getItem('p-login') && to.path !== '/login') {
+    //     next('/login');
+    // } else {
+    //     next();
+    // }
 });
 
 export default router;

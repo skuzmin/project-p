@@ -1,8 +1,8 @@
 <template>
-    <div class="login">
-        <section class="section">
-            <h2 class="title has-text-centered is-3">Project-P</h2>
-            <form @submit.prevent="login(user)">
+    <div class="register">
+        <section class="section" v-if="!isRegisterCompleted">
+            <h2 class="title has-text-centered is-3">Registration</h2>
+            <form @submit.prevent="register(user)">
                 <div class="columns">
                     <div class="column">
                         <b-field
@@ -23,7 +23,19 @@
                             :type="errors.password ? 'is-danger' : ''"
                             :message="errors.password"
                         >
-                            <b-input v-model="user.password" type="password" password-reveal></b-input>
+                            <b-input v-model="user.password" type="password"></b-input>
+                        </b-field>
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column">
+                        <b-field
+                            class="input-field"
+                            label="Confirm password"
+                            :type="errors.repassword ? 'is-danger' : ''"
+                            :message="errors.repassword"
+                        >
+                            <b-input v-model="user.repassword" type="password"></b-input>
                         </b-field>
                     </div>
                 </div>
@@ -35,7 +47,7 @@
                                 type="is-primary"
                                 outlined
                                 native-type="submit"
-                            >Login</b-button>
+                            >Register</b-button>
                         </div>
                     </div>
                 </div>
@@ -44,39 +56,56 @@
                         <div class="buttons">
                             <b-button
                                 tag="router-link"
-                                to="/register"
-                                type="is-text has-text-info"
-                            >Register</b-button>
-                            <b-button
-                                tag="router-link"
-                                to="/forgot-password"
                                 type="is-text right has-text-info"
-                            >Forgot your password?</b-button>
+                                to="/login"
+                            >Back to login</b-button>
                         </div>
                     </div>
                 </div>
             </form>
+        </section>
+        <section class="section" v-if="isRegisterCompleted">
+            <h2 class="title has-text-centered is-4">
+                Registration has been completed.
+            </h2>
+            <div class="columns has-text-centered">
+                <div class="column">
+                    Please check your email for a confirmation.
+                </div>
+            </div>
+            <div class="columns has-text-centered">
+                <div class="column">
+                    <b-button
+                        tag="router-link"
+                        type="is-text right has-text-info"
+                        to="/login"
+                    >Back to login</b-button>
+                </div>
+            </div>
         </section>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'Login',
+    name: 'Register',
     data() {
         return {
-            user: {},
+            user: {
+                email: '',
+                password: '',
+                repassword: '',
+            },
             errors: {},
+            isRegisterCompleted: false,
         };
     },
     methods: {
-        login(user) {
+        register(user) {
             if (!this.validation(user)) {
                 return;
             }
-            localStorage.setItem('p-login', true);
-            this.$root.$emit('login', true);
-            this.$router.push('/dashboard');
+            this.isRegisterCompleted = true;
         },
         validation(user) {
             let result = true;
@@ -89,6 +118,11 @@ export default {
                 this.errors.password = 'Password required';
                 result = false;
             }
+            if (user.password !== user.repassword) {
+                this.errors.repassword =
+                    'Password and Confirm password must be the same';
+                result = false;
+            }
             return result;
         },
     },
@@ -96,7 +130,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.login {
+.register {
     width: 500px;
     margin: 12vh auto;
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
