@@ -1,5 +1,5 @@
 <template>
-    <div class="register">
+    <div class="register p-panel">
         <section class="section" v-if="!isRegisterCompleted">
             <h2 class="title has-text-centered is-3">Registration</h2>
             <form @submit.prevent="register(user)">
@@ -131,17 +131,8 @@ export default {
 
 <style lang="scss" scoped>
 .register {
-    width: 500px;
-    margin: 12vh auto;
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
     .login-btn {
         width: 100%;
-    }
-    .right {
-        margin-left: auto;
-    }
-    .input-field {
-        min-height: 90px;
     }
     .columns {
         margin-bottom: 0;

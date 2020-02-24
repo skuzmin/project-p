@@ -1,5 +1,5 @@
 <template>
-    <div class="forgot-password">
+    <div class="forgot-password p-panel">
         <section class="section" v-if="!isEmailSent">
             <h2 class="title has-text-centered is-3">Forgot password?</h2>
             <h2 class="title has-text-centered is-6">
@@ -86,17 +86,8 @@ export default {
 
 <style lang="scss" scoped>
 .forgot-password {
-    width: 500px;
-    margin: 12vh auto;
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
     .login-btn {
         width: 100%;
-    }
-    .right {
-        margin-left: auto;
-    }
-    .input-field {
-        min-height: 90px;
     }
     .columns {
         margin-bottom: 0;

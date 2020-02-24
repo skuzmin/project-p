@@ -1,5 +1,5 @@
 <template>
-    <div class="login">
+    <div class="login p-panel">
         <section class="section">
             <h2 class="title has-text-centered is-3">Project-P</h2>
             <form @submit.prevent="login(user)">
@@ -97,17 +97,8 @@ export default {
 
 <style lang="scss" scoped>
 .login {
-    width: 500px;
-    margin: 12vh auto;
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
     .login-btn {
         width: 100%;
-    }
-    .right {
-        margin-left: auto;
-    }
-    .input-field {
-        min-height: 90px;
     }
     .columns {
         margin-bottom: 0;

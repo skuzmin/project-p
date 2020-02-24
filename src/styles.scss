@@ -1,0 +1,15 @@
+@import '../node_modules/buefy/dist/buefy.min.css';
+
+.p-app {
+    .p-panel {
+        width: 500px;
+        margin: 12vh auto;
+        box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    }
+    .right {
+        margin-left: auto;
+    }
+    .input-field {
+        min-height: 90px;
+    }
+}

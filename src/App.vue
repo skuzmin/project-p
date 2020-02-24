@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" class="p-app">
         <Navbar />
         <div class="container">
             <router-view />
@@ -15,3 +15,7 @@ export default {
     components: { Navbar },
 };
 </script>
+
+<style lang="scss">
+@import 'styles.scss';
+</style>
