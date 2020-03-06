@@ -64,6 +64,18 @@ const routes = [
             ),
     },
     {
+        path: '/users',
+        name: 'users',
+        component: () =>
+            import(/* webpackChunkName: 'users' */ '../views/user-list.vue'),
+    },
+    {
+        path: '/user/:id',
+        name: 'user-details',
+        component: () =>
+            import(/* webpackChunkName: 'users' */ '../views/user-details.vue'),
+    },
+    {
         path: '*',
         redirect: '/dashboard',
     },
