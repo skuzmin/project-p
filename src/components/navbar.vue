@@ -19,12 +19,6 @@
 
             <template slot="end">
                 <b-navbar-item tag="div">
-                    <!-- <div class="buttons">
-                        <a class="button is-primary">
-                            <strong>Sign up</strong>
-                        </a>
-                        <a class="button is-light">Log in</a>
-                    </div>-->
                     <div class="buttons">
                         <a class="button is-light" @click="logout()">Log out</a>
                     </div>
@@ -35,22 +29,19 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
+import { AUTH_LOGOUT } from '../store/modules/auth/auth-action-types';
+
 export default {
     name: 'Navbar',
-    created() {
-        this.$root.$on('login', val => (this.isLoggedIn = val));
-        this.isLoggedIn = !!localStorage.getItem('p-login');
-    },
-    data() {
-        return {
-            isLoggedIn: false,
-        };
+    computed: {
+        ...mapGetters(['isLoggedIn']),
     },
     methods: {
         logout() {
-            localStorage.removeItem('p-login');
-            this.isLoggedIn = false;
-            this.$router.push('/');
+            this.$store.dispatch(AUTH_LOGOUT);
+            this.$router.push('/login');
         },
     },
 };

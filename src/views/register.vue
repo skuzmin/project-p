@@ -5,25 +5,15 @@
             <form @submit.prevent="register(user)">
                 <div class="columns">
                     <div class="column">
-                        <b-field
-                            class="input-field"
-                            label="Email"
-                            :type="errors.email ? 'is-danger' : ''"
-                            :message="errors.email"
-                        >
+                        <b-field class="input-field" label="Email" :type="errors.email ? 'is-danger' : ''" :message="errors.email">
                             <b-input v-model.trim="user.email"></b-input>
                         </b-field>
                     </div>
                 </div>
                 <div class="columns">
                     <div class="column">
-                        <b-field
-                            class="input-field"
-                            label="Password"
-                            :type="errors.password ? 'is-danger' : ''"
-                            :message="errors.password"
-                        >
-                            <b-input v-model="user.password" type="password"></b-input>
+                        <b-field class="input-field" label="Password" :type="errors.password ? 'is-danger' : ''" :message="errors.password">
+                            <b-input autocomplete="new-password" v-model="user.password" type="password"></b-input>
                         </b-field>
                     </div>
                 </div>
@@ -35,30 +25,21 @@
                             :type="errors.repassword ? 'is-danger' : ''"
                             :message="errors.repassword"
                         >
-                            <b-input v-model="user.repassword" type="password"></b-input>
+                            <b-input autocomplete="new-password" v-model="user.repassword" type="password"></b-input>
                         </b-field>
                     </div>
                 </div>
                 <div class="columns btn-group">
                     <div class="column">
                         <div class="buttons">
-                            <b-button
-                                class="login-btn"
-                                type="is-primary"
-                                outlined
-                                native-type="submit"
-                            >Register</b-button>
+                            <b-button class="login-btn" type="is-primary" outlined native-type="submit">Register</b-button>
                         </div>
                     </div>
                 </div>
                 <div class="columns">
                     <div class="column">
                         <div class="buttons">
-                            <b-button
-                                tag="router-link"
-                                type="is-text right has-text-info"
-                                to="/login"
-                            >Back to login</b-button>
+                            <b-button tag="router-link" type="is-text right has-text-info" to="/login">Back to login</b-button>
                         </div>
                     </div>
                 </div>
@@ -75,11 +56,7 @@
             </div>
             <div class="columns has-text-centered">
                 <div class="column">
-                    <b-button
-                        tag="router-link"
-                        type="is-text right has-text-info"
-                        to="/login"
-                    >Back to login</b-button>
+                    <b-button tag="router-link" type="is-text right has-text-info" to="/login">Back to login</b-button>
                 </div>
             </div>
         </section>
@@ -119,8 +96,7 @@ export default {
                 result = false;
             }
             if (user.password !== user.repassword) {
-                this.errors.repassword =
-                    'Password and Confirm password must be the same';
+                this.errors.repassword = 'Password and Confirm password must be the same';
                 result = false;
             }
             return result;

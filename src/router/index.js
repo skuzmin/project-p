@@ -1,79 +1,56 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
+import { authGuard, loginGuard } from './guards';
+
 Vue.use(VueRouter);
 
 const routes = [
     {
         path: '/',
-        redirect: '/login',
+        redirect: '/dashboard',
     },
     {
         path: '/login',
         name: 'login',
-        beforeEnter: (_to, _from, next) => {
-            if (localStorage.getItem('p-login')) {
-                next('/dashboard');
-            } else {
-                next();
-            }
-        },
-        component: () =>
-            import(/* webpackChunkName: 'login' */ '../views/login.vue'),
+        beforeEnter: loginGuard,
+        component: () => import(/* webpackChunkName: 'login' */ '../views/login.vue'),
     },
     {
         path: '/register',
         name: 'register',
-        beforeEnter: (_to, _from, next) => {
-            if (localStorage.getItem('p-login')) {
-                next('/dashboard');
-            } else {
-                next();
-            }
-        },
-        component: () =>
-            import(/* webpackChunkName: 'login' */ '../views/register.vue'),
+        beforeEnter: loginGuard,
+        component: () => import(/* webpackChunkName: 'login' */ '../views/register.vue'),
     },
     {
         path: '/forgot-password',
         name: 'forgot-password',
-        beforeEnter: (_to, _from, next) => {
-            if (localStorage.getItem('p-login')) {
-                next('/dashboard');
-            } else {
-                next();
-            }
-        },
-        component: () =>
-            import(/* webpackChunkName: 'login' */ '../views/forgot-password.vue'),
+        beforeEnter: {},
+        component: () => import(/* webpackChunkName: 'login' */ '../views/forgot-password.vue'),
     },
     {
         path: '/dashboard',
         name: 'dashboard',
-        component: () =>
-            import(
-                /* webpackChunkName: 'dashboard' */ '../views/dashboard.vue'
-            ),
+        beforeEnter: authGuard,
+        component: () => import(/* webpackChunkName: 'dashboard' */ '../views/dashboard.vue'),
     },
     {
         path: '/parking/:id',
         name: 'parking-details',
-        component: () =>
-            import(
-                /* webpackChunkName: 'parking' */ '../views/parking-details.vue'
-            ),
+        beforeEnter: authGuard,
+        component: () => import(/* webpackChunkName: 'parking' */ '../views/parking-details.vue'),
     },
     {
         path: '/users',
         name: 'users',
-        component: () =>
-            import(/* webpackChunkName: 'users' */ '../views/user-list.vue'),
+        beforeEnter: authGuard,
+        component: () => import(/* webpackChunkName: 'users' */ '../views/user-list.vue'),
     },
     {
         path: '/user/:id',
         name: 'user-details',
-        component: () =>
-            import(/* webpackChunkName: 'users' */ '../views/user-details.vue'),
+        beforeEnter: authGuard,
+        component: () => import(/* webpackChunkName: 'users' */ '../views/user-details.vue'),
     },
     {
         path: '*',
@@ -85,15 +62,6 @@ const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     routes,
-});
-
-router.beforeEach((to, _from, next) => {
-    next();
-    // if (!localStorage.getItem('p-login') && to.path !== '/login') {
-    //     next('/login');
-    // } else {
-    //     next();
-    // }
 });
 
 export default router;

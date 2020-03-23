@@ -5,24 +5,14 @@
             <form @submit.prevent="login(user)">
                 <div class="columns">
                     <div class="column">
-                        <b-field
-                            class="input-field"
-                            label="Email"
-                            :type="errors.email ? 'is-danger' : ''"
-                            :message="errors.email"
-                        >
+                        <b-field class="input-field" label="Email" :type="errors.email ? 'is-danger' : ''" :message="errors.email">
                             <b-input v-model.trim="user.email"></b-input>
                         </b-field>
                     </div>
                 </div>
                 <div class="columns">
                     <div class="column">
-                        <b-field
-                            class="input-field"
-                            label="Password"
-                            :type="errors.password ? 'is-danger' : ''"
-                            :message="errors.password"
-                        >
+                        <b-field class="input-field" label="Password" :type="errors.password ? 'is-danger' : ''" :message="errors.password">
                             <b-input v-model="user.password" type="password" password-reveal></b-input>
                         </b-field>
                     </div>
@@ -30,28 +20,15 @@
                 <div class="columns btn-group">
                     <div class="column">
                         <div class="buttons">
-                            <b-button
-                                class="login-btn"
-                                type="is-primary"
-                                outlined
-                                native-type="submit"
-                            >Login</b-button>
+                            <b-button class="login-btn" type="is-primary" outlined native-type="submit">Login</b-button>
                         </div>
                     </div>
                 </div>
                 <div class="columns">
                     <div class="column">
                         <div class="buttons">
-                            <b-button
-                                tag="router-link"
-                                to="/register"
-                                type="is-text has-text-info"
-                            >Register</b-button>
-                            <b-button
-                                tag="router-link"
-                                to="/forgot-password"
-                                type="is-text right has-text-info"
-                            >Forgot your password?</b-button>
+                            <b-button tag="router-link" to="/register" type="is-text has-text-info">Register</b-button>
+                            <b-button tag="router-link" to="/forgot-password" type="is-text right has-text-info">Forgot your password?</b-button>
                         </div>
                     </div>
                 </div>
@@ -61,6 +38,10 @@
 </template>
 
 <script>
+import { AUTH_LOGIN } from '@/store/modules/auth/auth-action-types';
+import { LOADING } from '@/store/modules/buefy/buefy-action-types';
+import { LOGIN_EMAIL_REQUIRED, LOGIN_PASSWORD_REQUIRED } from '@/shared/constants';
+
 export default {
     name: 'Login',
     data() {
@@ -74,19 +55,22 @@ export default {
             if (!this.validation(user)) {
                 return;
             }
-            localStorage.setItem('p-login', true);
-            this.$root.$emit('login', true);
-            this.$router.push('/dashboard');
+            this.$store.dispatch(LOADING, true);
+            this.$store
+                .dispatch(AUTH_LOGIN, user)
+                .then(() => this.$router.push('/dashboard'))
+                .catch(() => {})
+                .finally(() => this.$store.dispatch(LOADING, false));
         },
         validation(user) {
             let result = true;
             this.errors = {};
             if (!user.email) {
-                this.errors.email = 'Email required';
+                this.errors.email = LOGIN_EMAIL_REQUIRED;
                 result = false;
             }
             if (!user.password) {
-                this.errors.password = 'Password required';
+                this.errors.password = LOGIN_PASSWORD_REQUIRED;
                 result = false;
             }
             return result;

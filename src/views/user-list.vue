@@ -2,41 +2,25 @@
     <div class="user-list">
         <section class="section">
             <h4 class="title is-4">Users</h4>
-            <b-table
-                :data="users"
-                :per-page="itemsPerPage"
-                default-sort="name"
-                paginated
-                :loading="isLoading"
-            >
+            <b-table :data="users" :per-page="itemsPerPage" default-sort="name" paginated :loading="isLoading">
                 <template slot-scope="props">
                     <b-table-column field="username" label="User" sortable>
                         <router-link :to="`/user/${props.row.id}`">{{ props.row.username }}</router-link>
                     </b-table-column>
 
-                    <b-table-column
-                        field="email"
-                        label="Email"
-                        sortable
-                        width="350"
-                    >{{ props.row.email }}</b-table-column>
+                    <b-table-column field="email" label="Email" sortable width="350">{{ props.row.email }}</b-table-column>
 
                     <b-table-column field="isAdmin" label="Admin" width="130" sortable>
                         <b-icon class="has-text-primary" icon="check" v-if="props.row.isAdmin"></b-icon>
                     </b-table-column>
 
-                    <b-table-column
-                        field="createDate"
-                        label="Create Date"
-                        sortable
-                        width="250"
-                    >{{ props.row.createDate }}</b-table-column>
+                    <b-table-column field="createDate" label="Create Date" sortable width="250">{{ props.row.createDate }}</b-table-column>
 
                     <b-table-column width="30">
                         <b-icon
                             class="btn-icon has-text-primary"
                             icon="delete-outline"
-                            :class="{'disabled': props.row.isAdmin}"
+                            :class="{ disabled: props.row.isAdmin }"
                             @click.native="deleteUser(props.row)"
                         ></b-icon>
                     </b-table-column>
@@ -50,14 +34,20 @@
 import { format } from 'date-fns';
 
 import { userService } from '../services';
+import store from '../store';
+import { ERROR, LOADING } from '../store/modules/buefy/buefy-action-types';
 
 export default {
     name: 'UserList',
-    async created() {
-        this.isLoading = true;
-        const users = await userService.getUsers();
-        this.formatData(users);
-        this.isLoading = false;
+    async beforeRouteEnter(_to, _from, next) {
+        store.dispatch(LOADING, true);
+        try {
+            const users = await userService.getUsers();
+            next(vm => vm.formatData(users));
+        } catch (e) {
+            next(false);
+        }
+        store.dispatch(LOADING, false);
     },
     data() {
         return {
@@ -75,9 +65,13 @@ export default {
                 message: `Are you sure want to delete user: ${user.username} ?`,
                 onConfirm: async () => {
                     this.isLoading = true;
-                    await userService.deleteUser(user.id);
+                    try {
+                        await userService.deleteUser(user.id);
+                        this.users = this.users.filter(p => p.id !== user.id);
+                    } catch (e) {
+                        this.$store.dispatch(ERROR, e);
+                    }
                     this.isLoading = false;
-                    this.users = this.users.filter(p => p.id !== user.id);
                 },
             });
         },
@@ -93,13 +87,18 @@ export default {
             });
         },
     },
+    computed: {
+        isTableEmpty() {
+            return !this.users.length && !this.isLoading;
+        },
+    },
 };
 </script>
 
 <style lang="scss" scoped>
 .user-list {
     margin-top: 30px;
-    min-height: 400px;
+    min-height: 300px;
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
     .btn-icon {
         cursor: pointer;
