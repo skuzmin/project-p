@@ -1,5 +1,5 @@
 import { ToastProgrammatic as Toast } from 'buefy';
-import { SUCCESS, ERROR, LOADING } from './buefy-action-types';
+import { TOAST_SUCCESS, TOAST_ERROR, LOADING } from './buefy-action-types';
 
 const state = {
     isLoading: false,
@@ -12,10 +12,10 @@ const mutations = {
 };
 
 const actions = {
-    [SUCCESS]: (_, message) => {
+    [TOAST_SUCCESS]: (_, message) => {
         Toast.open({ message, type: 'is-success', queue: false });
     },
-    [ERROR]: (_, message) => {
+    [TOAST_ERROR]: (_, message) => {
         Toast.open({ message, type: 'is-danger', queue: false, duration: 3000 });
     },
     [LOADING]: ({ commit }, status) => {

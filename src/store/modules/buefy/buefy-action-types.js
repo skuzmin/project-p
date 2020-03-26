@@ -1,3 +1,3 @@
-export const SUCCESS = 'success';
-export const ERROR = 'error';
-export const LOADING = 'loading';
+export const TOAST_SUCCESS = 'toastSuccess';
+export const TOAST_ERROR = 'toastError';
+export const LOADING = 'toastLoading';

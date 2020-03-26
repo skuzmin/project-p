@@ -46,13 +46,9 @@
             </form>
         </section>
         <section class="section" v-if="isRegisterCompleted">
-            <h2 class="title has-text-centered is-4">
-                Registration has been completed.
-            </h2>
+            <h2 class="title has-text-centered is-4">Registration has been completed.</h2>
             <div class="columns has-text-centered">
-                <div class="column">
-                    Please check your email for a confirmation.
-                </div>
+                <div class="column">Please check your email for the confirmation link.</div>
             </div>
             <div class="columns has-text-centered">
                 <div class="column">
@@ -64,6 +60,9 @@
 </template>
 
 <script>
+import { REGISTER } from '@/store/modules/auth/auth-action-types';
+import { LOADING, TOAST_ERROR } from '@/store/modules/buefy/buefy-action-types';
+
 export default {
     name: 'Register',
     data() {
@@ -82,7 +81,16 @@ export default {
             if (!this.validation(user)) {
                 return;
             }
-            this.isRegisterCompleted = true;
+            this.$store.dispatch(LOADING, true);
+            this.$store
+                .dispatch(REGISTER, user)
+                .then(() => {
+                    this.isRegisterCompleted = true;
+                })
+                .catch(err => {
+                    this.$store.dispatch(TOAST_ERROR, err.data.error);
+                })
+                .finally(() => this.$store.dispatch(LOADING, false));
         },
         validation(user) {
             let result = true;

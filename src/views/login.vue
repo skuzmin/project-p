@@ -27,7 +27,7 @@
                 <div class="columns">
                     <div class="column">
                         <div class="buttons">
-                            <b-button tag="router-link" to="/register" type="is-text has-text-info">Register</b-button>
+                            <b-button tag="router-link" to="/registration" type="is-text has-text-info">Registration</b-button>
                             <b-button tag="router-link" to="/forgot-password" type="is-text right has-text-info">Forgot your password?</b-button>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
 
 <script>
 import { AUTH_LOGIN } from '@/store/modules/auth/auth-action-types';
-import { LOADING } from '@/store/modules/buefy/buefy-action-types';
+import { LOADING, TOAST_ERROR } from '@/store/modules/buefy/buefy-action-types';
 import { LOGIN_EMAIL_REQUIRED, LOGIN_PASSWORD_REQUIRED } from '@/shared/constants';
 
 export default {
@@ -59,7 +59,7 @@ export default {
             this.$store
                 .dispatch(AUTH_LOGIN, user)
                 .then(() => this.$router.push('/dashboard'))
-                .catch(() => {})
+                .catch(err => this.$store.dispatch(TOAST_ERROR, err.data.error))
                 .finally(() => this.$store.dispatch(LOADING, false));
         },
         validation(user) {

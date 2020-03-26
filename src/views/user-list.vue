@@ -35,7 +35,7 @@ import { format } from 'date-fns';
 
 import { userService } from '../services';
 import store from '../store';
-import { ERROR, LOADING } from '../store/modules/buefy/buefy-action-types';
+import { TOAST_ERROR, LOADING } from '../store/modules/buefy/buefy-action-types';
 
 export default {
     name: 'UserList',
@@ -69,7 +69,7 @@ export default {
                         await userService.deleteUser(user.id);
                         this.users = this.users.filter(p => p.id !== user.id);
                     } catch (e) {
-                        this.$store.dispatch(ERROR, e);
+                        this.$store.dispatch(TOAST_ERROR, e);
                     }
                     this.isLoading = false;
                 },

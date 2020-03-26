@@ -17,15 +17,21 @@ const routes = [
         component: () => import(/* webpackChunkName: 'login' */ '../views/login.vue'),
     },
     {
-        path: '/register',
-        name: 'register',
+        path: '/registration',
+        name: 'registration',
         beforeEnter: loginGuard,
-        component: () => import(/* webpackChunkName: 'login' */ '../views/register.vue'),
+        component: () => import(/* webpackChunkName: 'login' */ '../views/registration.vue'),
+    },
+    {
+        path: '/verify',
+        name: 'verify',
+        beforeEnter: loginGuard,
+        component: () => import(/* webpackChunkName: 'login' */ '../views/verify.vue'),
     },
     {
         path: '/forgot-password',
         name: 'forgot-password',
-        beforeEnter: {},
+        beforeEnter: loginGuard,
         component: () => import(/* webpackChunkName: 'login' */ '../views/forgot-password.vue'),
     },
     {

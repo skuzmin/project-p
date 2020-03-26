@@ -1,5 +1,5 @@
 import { authService } from '../../../services';
-import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_CHECK } from './auth-action-types';
+import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_CHECK, REGISTER, VERIFY, FORGOT_PASSWORD, SET_PASSWORD } from './auth-action-types';
 import { removeToken, setToken, parseToken, getToken } from './auth-helpers';
 
 const state = {
@@ -60,6 +60,38 @@ const actions = {
             commit(AUTH_LOGOUT);
             removeToken();
         }
+    },
+    [REGISTER]: (_, data) => {
+        return new Promise((resolve, reject) => {
+            authService
+                .register(data)
+                .then(() => resolve())
+                .catch(err => reject(err));
+        });
+    },
+    [VERIFY]: (_, token) => {
+        return new Promise((resolve, reject) => {
+            authService
+                .verify({ token })
+                .then(() => resolve())
+                .catch(err => reject(err));
+        });
+    },
+    [FORGOT_PASSWORD]: (_, email) => {
+        return new Promise((resolve, reject) => {
+            authService
+                .forgotPassword({ email })
+                .then(() => resolve())
+                .catch(err => reject(err));
+        });
+    },
+    [SET_PASSWORD]: (_, { token, password }) => {
+        return new Promise((resolve, reject) => {
+            authService
+                .setPassword({ token, password })
+                .then(() => resolve())
+                .catch(err => reject(err));
+        });
     },
 };
 
