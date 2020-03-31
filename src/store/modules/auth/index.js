@@ -3,7 +3,7 @@ import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_CHECK, REGISTER, VERIFY, FORGOT_PASSWORD,
 import { removeToken, setToken, parseToken, getToken } from './auth-helpers';
 
 const state = {
-    currentUser: null,
+    currentUser: {},
     token: null,
 };
 
@@ -13,7 +13,7 @@ const mutations = {
         state.token = token;
     },
     [AUTH_LOGOUT]: state => {
-        state.currentUser = null;
+        state.currentUser = {};
         state.token = null;
     },
 };
@@ -96,8 +96,9 @@ const actions = {
 };
 
 const getters = {
-    isLoggedIn: state => !!state.currentUser,
+    isLoggedIn: state => !!state.currentUser.id && !!state.token,
     token: state => state.token,
+    currentUser: state => state.currentUser,
 };
 
 export default {

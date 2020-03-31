@@ -18,9 +18,10 @@
 
                     <b-table-column width="30">
                         <b-icon
+                            v-if="currentUser.is_admin"
                             class="btn-icon has-text-primary"
                             icon="delete-outline"
-                            :class="{ disabled: props.row.isAdmin }"
+                            :class="{ disabled: isCurrentUser(props.row.id) }"
                             @click.native="deleteUser(props.row)"
                         ></b-icon>
                     </b-table-column>
@@ -32,6 +33,7 @@
 
 <script>
 import { format } from 'date-fns';
+import { mapGetters } from 'vuex';
 
 import { userService } from '../services';
 import store from '../store';
@@ -43,7 +45,7 @@ export default {
         store.dispatch(LOADING, true);
         try {
             const users = await userService.getUsers();
-            next(vm => vm.formatData(users));
+            next(vm => vm.formatData(users.data));
         } catch (e) {
             next(false);
         }
@@ -75,6 +77,9 @@ export default {
                 },
             });
         },
+        isCurrentUser(id) {
+            return this.currentUser.id === id;
+        },
         formatData(users) {
             users.forEach(u => {
                 this.users.push({
@@ -88,6 +93,7 @@ export default {
         },
     },
     computed: {
+        ...mapGetters(['currentUser']),
         isTableEmpty() {
             return !this.users.length && !this.isLoading;
         },
