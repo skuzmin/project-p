@@ -5,6 +5,7 @@
         <div class="container">
             <router-view />
         </div>
+        <AppVersion />
     </div>
 </template>
 
@@ -12,10 +13,11 @@
 import { mapGetters } from 'vuex';
 
 import Navbar from './components/navbar';
+import AppVersion from './components/version';
 
 export default {
     name: 'App',
-    components: { Navbar },
+    components: { Navbar, AppVersion },
     computed: {
         ...mapGetters(['isLoading']),
     },

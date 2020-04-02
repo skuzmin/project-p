@@ -1,8 +1,9 @@
 import Vue from 'vue';
+import Buefy from 'buefy';
+
 import App from './app.vue';
 import router from './router';
 import store from './store';
-import Buefy from 'buefy';
 import interceptorsSetup from './axios/interceptors';
 
 interceptorsSetup();
