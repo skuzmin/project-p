@@ -1,0 +1,27 @@
+version: '3'
+services:
+    backend:
+        image: project-p-backend
+        container_name: node_container
+        build: .
+        depends_on:
+            - "db"
+        ports:
+            - "9001:9001"
+       
+    db:
+        image: postgres
+        container_name: pg_container
+        restart: always
+        ports:
+            - "5432:5432"
+        volumes:
+            - ./scripts:/docker-entrypoint-initdb.d:ro
+            - pgdata:/var/lib/postgresql/data
+        environment:
+            POSTGRES_USER: adm1n
+            POSTGRES_PASSWORD: Passw0rd
+            POSTGRES_DB: project_p
+volumes:
+    pgdata:
+        

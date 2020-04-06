@@ -1,0 +1,20 @@
+{
+  "name": "docker-test",
+  "version": "1.0.0",
+  "description": "n/a",
+  "main": "index.js",
+  "scripts": {
+    "serve": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "repository": "n/a",
+  "dependencies": {
+    "bcrypt": "^4.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "nodemailer": "^6.4.6",
+    "pg-promise": "^10.4.4",
+    "randomstring": "^1.1.5",
+    "uWebSockets.js": "github:uNetworking/uWebSockets.js#v17.1.0"
+  }
+}

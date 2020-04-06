@@ -59,7 +59,11 @@ export default {
             this.$store
                 .dispatch(AUTH_LOGIN, user)
                 .then(() => this.$router.push('/dashboard'))
-                .catch(err => this.$store.dispatch(TOAST_ERROR, err.data.error))
+                .catch(err => {
+                    if (err.data) {
+                        this.$store.dispatch(TOAST_ERROR, err.data.error);
+                    }
+                })
                 .finally(() => this.$store.dispatch(LOADING, false));
         },
         validation(user) {
