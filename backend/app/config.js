@@ -1,7 +1,7 @@
 const config = {
     port: 9001,
     dbCn: {
-        host: 'pg_container',
+        host: process.env.PG_IP || 'pg_container',
         port: 5432,
         database: 'project_p',
         user: 'adm1n',

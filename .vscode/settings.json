@@ -3,8 +3,8 @@
         {
             "database": "project_p",
             "dialect": "PostgreSQL",
-            "isActive": true,
-            "isConnected": true,
+            "isActive": false,
+            "isConnected": false,
             "name": "poject_p",
             "password": "Passw0rd",
             "port": 5432,

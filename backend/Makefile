@@ -7,6 +7,9 @@ dev: | build
 run: | build
 	docker-compose up -d
 
+run-db:
+	docker-compose up -d db
+
 stop:
 	docker-compose down
 

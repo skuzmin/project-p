@@ -4,7 +4,8 @@
   "description": "n/a",
   "main": "index.js",
   "scripts": {
-    "serve": "node index.js"
+    "start": "node index.js",
+    "serve": "export PG_IP=localhost && node index.js"
   },
   "author": "",
   "license": "ISC",
