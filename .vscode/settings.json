@@ -1,0 +1,23 @@
+{
+    "sqltools.connections": [
+        {
+            "database": "project_p",
+            "dialect": "PostgreSQL",
+            "isActive": true,
+            "isConnected": true,
+            "name": "poject_p",
+            "password": "Passw0rd",
+            "port": 5432,
+            "server": "0.0.0.0",
+            "username": "adm1n"
+        }
+    ],
+    "cSpell.words": [
+        "POSTGRES",
+        "entrypoint",
+        "initdb",
+        "pgdata",
+        "postgresql",
+        "randomstring"
+    ]
+}

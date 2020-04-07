@@ -1,19 +1,19 @@
 import axios from '@/axios';
 
 const getUsers = () => {
-    return axios.get('users');
+    return axios.get('/api/users');
 };
 
 const deleteUser = id => {
-    return axios.delete(`user/${id}`);
+    return axios.delete(`/api/user/${id}`);
 };
 
 const getUserById = id => {
-    return axios.get(`user/${id}`);
+    return axios.get(`/api/user/${id}`);
 };
 
 const activateUser = id => {
-    return axios.post(`user/${id}/activate`);
+    return axios.post(`/api/user/${id}/activate`);
 };
 
 export const userService = {

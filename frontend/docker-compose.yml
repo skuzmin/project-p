@@ -2,10 +2,11 @@ version: '3'
 services: 
     proxy:
         build: .
+        container_name: nginx_container
         restart: always
         ports:
         - "80:80"
 networks:
     default:
         external:
-            name: project-p-backend_default
+            name: backend_default

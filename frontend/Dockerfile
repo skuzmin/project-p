@@ -17,6 +17,4 @@ RUN npm install
 COPY ./public/ ./public/
 COPY ./src/ ./src/
 RUN npm run-script build-local
-
-WORKDIR /usr/share/nginx/html
-COPY ./dist/ .
+RUN cp -a ./dist/. /usr/share/nginx/html/

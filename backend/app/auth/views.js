@@ -15,7 +15,8 @@ const views = {
     setNewPassword
 };
 
-function login(res) {
+function login(res, req) {
+    console.log(req.getHeader('host'));
     res.onAborted();
     res.onData(async (ab) => {
         const credentials = JSON.parse(Buffer.from(ab));
