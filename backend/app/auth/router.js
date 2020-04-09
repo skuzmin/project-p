@@ -7,6 +7,7 @@ const makeRoutes = function (app) {
     app.post(`${baseUrl}/verify`, views.verify);
     app.post(`${baseUrl}/forgot-password`, views.forgotPassword);
     app.post(`${baseUrl}/set-new-password`, views.setNewPassword);
+    app.post(`${baseUrl}/auth/jwt/refresh`, views.refreshToken);
 };
 
 module.exports = makeRoutes;

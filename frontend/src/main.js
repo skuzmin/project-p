@@ -4,9 +4,9 @@ import Buefy from 'buefy';
 import App from './app.vue';
 import router from './router';
 import store from './store';
-import interceptorsSetup from './axios/interceptors';
+import appInit from './app-init';
 
-interceptorsSetup();
+appInit();
 
 Vue.config.productionTip = false;
 

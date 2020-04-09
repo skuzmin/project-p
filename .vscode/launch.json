@@ -11,6 +11,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
+            "env": { "PG_IP": "localhost" },
             "program": "${workspaceFolder}/backend/index.js"
         }
     ]

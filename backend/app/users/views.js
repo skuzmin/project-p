@@ -16,13 +16,7 @@ const views = {
 
 async function getUsers(res, req) {
     res.onAborted();
-    if(!isAuthenticated(req)) {
-        res
-            .writeStatus('401 Unauthorized')
-            .writeHeader('Content-Type', 'application/json')
-            .end(JSON.stringify({ error: 'Unauthorized' }));
-            return;
-    }
+    isAuthenticated(res,req);
     try {
         const users = await repository.getUsers();
         res
@@ -40,13 +34,7 @@ async function getUsers(res, req) {
 async function getUserById(res, req) {
     res.onAborted();
     const id = req.getParameter(0);
-    if(!isAuthenticated(req)) {
-        res
-            .writeStatus('401 Unauthorized')
-            .writeHeader('Content-Type', 'application/json')
-            .end(JSON.stringify({ error: 'Unauthorized' }));
-            return;
-    }
+    isAuthenticated(res,req);
     try {
         const user = await repository.getUserById(id);
         if (user) {
@@ -71,13 +59,7 @@ async function getUserById(res, req) {
 async function activateUser(res, req) {
     res.onAborted();
     const id = req.getParameter(0);
-    if(!isAuthenticated(req)) {
-        res
-            .writeStatus('401 Unauthorized')
-            .writeHeader('Content-Type', 'application/json')
-            .end(JSON.stringify({ error: 'Unauthorized' }));
-            return;
-    }
+    isAuthenticated(res,req);
     try {
         await repository.activateUser(id);
         res
@@ -94,13 +76,7 @@ async function activateUser(res, req) {
 function updateUserById(res, req) {
     res.onAborted();
     const id = req.getParameter(0);
-    if(!isAuthenticated(req)) {
-        res
-            .writeStatus('401 Unauthorized')
-            .writeHeader('Content-Type', 'application/json')
-            .end(JSON.stringify({ error: 'Unauthorized' }));
-            return;
-    }
+    isAuthenticated(res,req);
     res.onData(async (ab) => {
         const userData = JSON.parse(Buffer.from(ab));
         const validation = updateUserValidation(userData);
@@ -146,13 +122,7 @@ function updateUserById(res, req) {
 async function deleteUserById(res, req) {
     res.onAborted();
     const id = req.getParameter(0);
-    if(!isAuthenticated(req)) {
-        res
-            .writeStatus('401 Unauthorized')
-            .writeHeader('Content-Type', 'application/json')
-            .end(JSON.stringify({ error: 'Unauthorized' }));
-            return;
-    }
+    isAuthenticated(res,req);
     try {
         await repository.deleteUserById(id);
         res

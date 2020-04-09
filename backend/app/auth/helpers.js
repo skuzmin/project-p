@@ -6,19 +6,25 @@ const helpers = {
     isAuthenticated
 };
 
-function isAuthenticated(req) {
+function isAuthenticated(res, req) {
     const header = req.getHeader('authorization');
     if (!header) {
-        return null;
-    }
-    const token = header.split('JWT ')[1];
-
-    try {
-        const decoded = jwt.verify(token, jwtSecret);
-        return decoded;
-    } catch (err) {
-        return null;
+        setUnauthorizedStatus(res, 'You are not authorized');
+    } else {
+        const token = header.split('JWT ')[1];
+        jwt.verify(token, jwtSecret, err => {
+            if (err) {
+                setUnauthorizedStatus(res, err);
+            }
+        });
     }
 };
+
+function setUnauthorizedStatus(res, error) {
+    res
+        .writeStatus('401 Unauthorized')
+        .writeHeader('Content-Type', 'application/json')
+        .end(JSON.stringify({ error }));
+}
 
 module.exports = helpers;

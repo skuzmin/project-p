@@ -1,4 +1,4 @@
-import axios from '@/axios';
+import * as axios from 'axios';
 
 const login = credentials => {
     return axios.post('/api/login', credentials);
@@ -20,10 +20,15 @@ const setPassword = data => {
     return axios.post('/api/set-new-password', data);
 };
 
+const appHeartBeat = token => {
+    return axios.post('/api/auth/jwt/refresh', token);
+};
+
 export const authService = {
     login,
     register,
     forgotPassword,
     verify,
     setPassword,
+    appHeartBeat,
 };

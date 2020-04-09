@@ -12,11 +12,11 @@ const views = {
     register,
     forgotPassword,
     verify,
-    setNewPassword
+    setNewPassword,
+    refreshToken
 };
 
-function login(res, req) {
-    console.log(req.getHeader('host'));
+function login(res) {
     res.onAborted();
     res.onData(async (ab) => {
         const credentials = JSON.parse(Buffer.from(ab));
@@ -35,7 +35,7 @@ function login(res, req) {
             } else {
                 bcrypt.compare(credentials.password, user.password, async function (_err, result) {
                     if (result) {
-                        const token = jwt.sign(user, jwtSecret, { expiresIn: 60 * 60 });;
+                        const token = jwt.sign(user, jwtSecret, { expiresIn: 3 * 60 });
                         await userRepository.bumpLoginTimestamp(user.id);
                         res
                             .writeStatus('200 OK')
@@ -214,6 +214,30 @@ function forgotPassword(res) {
                 .writeHeader('Content-Type', 'application/json')
                 .end(JSON.stringify({ error }));
         }
+    });
+}
+
+function refreshToken(res) {
+    res.onAborted();
+    res.onData(ab => {
+        const { token } = JSON.parse(Buffer.from(ab));
+        jwt.verify(token, jwtSecret, (error, decoded) => {
+            if (error) {
+                res
+                    .writeStatus('401 Unauthorized')
+                    .writeHeader('Content-Type', 'application/json')
+                    .end(JSON.stringify({ error }));
+            }
+            if(decoded) {
+                delete decoded.iat;
+                delete decoded.exp;
+                const token = jwt.sign(decoded, jwtSecret, { expiresIn: 3 * 60 });
+                res
+                    .writeStatus('200 OK')
+                    .writeHeader('Content-Type', 'application/json')
+                    .end(JSON.stringify({ token }));
+            }
+        });
     });
 }
 

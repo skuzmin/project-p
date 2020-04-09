@@ -5,3 +5,5 @@ export const REGISTER = 'register';
 export const VERIFY = 'verify';
 export const FORGOT_PASSWORD = 'forgotPassword';
 export const SET_PASSWORD = 'setPassword';
+export const APP_HEART_BEAT = 'appHeartBeat';
+export const SET_USER = 'setUser';
