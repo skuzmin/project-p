@@ -2,6 +2,7 @@ FROM nginx:stable
 
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY nodejs-basic.conf /etc/nginx/conf.d/nodejs-basic.conf
+COPY mime.types /etc/nginx/conf.d/mime.types
 COPY ./certificates/. /etc/nginx/ssl
 
 RUN apt-get update
