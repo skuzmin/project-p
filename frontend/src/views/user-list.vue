@@ -1,7 +1,10 @@
 <template>
     <div class="user-list">
         <section class="section">
-            <h4 class="title is-4">Users</h4>
+            <div class="table-header">
+                <h4 class="title is-4">Users</h4>
+                <CreateUserModal v-on:userCreated="addUser($event)" v-if="currentUser.is_admin" />
+            </div>
             <b-table :data="users" :per-page="itemsPerPage" default-sort="name" paginated :loading="isLoading">
                 <template slot-scope="props">
                     <b-table-column field="username" label="User" sortable>
@@ -38,9 +41,11 @@ import { mapGetters } from 'vuex';
 import { userService } from '../services';
 import store from '../store';
 import { TOAST_ERROR, LOADING } from '../store/modules/buefy/buefy-action-types';
+import CreateUserModal from './create-user-modal';
 
 export default {
     name: 'UserList',
+    components: { CreateUserModal },
     async beforeRouteEnter(_to, _from, next) {
         store.dispatch(LOADING, true);
         try {
@@ -60,9 +65,6 @@ export default {
     },
     methods: {
         deleteUser(user) {
-            if (user.isAdmin) {
-                return;
-            }
             this.$buefy.dialog.confirm({
                 message: `Are you sure want to delete user: ${user.username} ?`,
                 onConfirm: async () => {
@@ -76,6 +78,9 @@ export default {
                     this.isLoading = false;
                 },
             });
+        },
+        addUser(user) {
+            this.users.push(user);
         },
         isCurrentUser(id) {
             return this.currentUser.id === id;
@@ -112,6 +117,15 @@ export default {
     .disabled {
         pointer-events: none;
         opacity: 0.7;
+    }
+    .table-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 32px;
+        .title {
+            margin-bottom: 0;
+        }
     }
 }
 </style>

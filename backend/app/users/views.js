@@ -159,7 +159,8 @@ function createUser(res) {
                         username: user.username,
                         email: user.email,
                         password: bcrypt.hashSync(user.password, saltRounds),
-                        isActive: true
+                        isActive: user.isActive,
+                        isAdmin: user.isAdmin
                     };
                     try {
                         const newUserId = await repository.createUser(newUser);

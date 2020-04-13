@@ -1,6 +1,5 @@
 import { authService } from '../../../services';
 import { AUTH_LOGIN, AUTH_LOGOUT, REGISTER, VERIFY, AUTH_CHECK, FORGOT_PASSWORD, SET_PASSWORD, APP_HEART_BEAT, SET_USER } from './auth-action-types';
-import { TOAST_ERROR } from '../buefy/buefy-action-types';
 import { removeToken, setToken, parseToken, getToken } from './auth-helpers';
 import { HEART_BEAT_INTERVAL } from '../../../shared/constants';
 import router from '@/router';
@@ -74,21 +73,15 @@ const actions = {
             commit(AUTH_LOGOUT);
         }
     },
-    [APP_HEART_BEAT]: ({ commit, dispatch, getters }) => {
+    [APP_HEART_BEAT]: ({ commit, getters }) => {
         const appHeatBeat = setInterval(() => {
-            authService
-                .appHeartBeat({ token: getters.token })
-                .then(result => {
-                    const { token } = result.data;
-                    const user = parseToken(token);
-                    commit(AUTH_LOGIN, token);
-                    commit(SET_USER, user);
-                    setToken(token);
-                })
-                .catch(() => {
-                    dispatch(AUTH_LOGOUT);
-                    dispatch(TOAST_ERROR, 'You are not authorized');
-                });
+            authService.appHeartBeat({ token: getters.token }).then(result => {
+                const { token } = result.data;
+                const user = parseToken(token);
+                commit(AUTH_LOGIN, token);
+                commit(SET_USER, user);
+                setToken(token);
+            });
         }, HEART_BEAT_INTERVAL);
         commit(APP_HEART_BEAT, appHeatBeat);
     },

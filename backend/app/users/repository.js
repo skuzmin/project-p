@@ -65,7 +65,7 @@ async function updateUserById(id, userData) {
 async function createUser(user) {
     const id = await db.one(`
             INSERT INTO users (username, password, email, created_on, is_admin, is_active, token)
-            VALUES ('${user.username}', '${user.password}', '${user.email}', current_timestamp, false, ${user.isActive}, '${user.token}') 
+            VALUES ('${user.username}', '${user.password}', '${user.email}', current_timestamp, ${user.isAdmin}, ${user.isActive}, '${user.token}') 
             RETURNING id
         `);
     return id;
