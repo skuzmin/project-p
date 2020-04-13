@@ -153,14 +153,14 @@ function createUser(res) {
                     res
                         .writeStatus('400 Bad Request')
                         .writeHeader('Content-Type', 'application/json')
-                        .end(JSON.stringify({ error: 'A user with this email already exists' }));
+                        .end(JSON.stringify({ error: 'User with this email already exists' }));
                 } else {
                     const newUser = {
                         username: user.username,
                         email: user.email,
                         password: bcrypt.hashSync(user.password, saltRounds),
-                        isActive: user.isActive,
-                        isAdmin: user.isAdmin
+                        isActive: !!user.isActive,
+                        isAdmin: !!user.isAdmin
                     };
                     try {
                         const newUserId = await repository.createUser(newUser);

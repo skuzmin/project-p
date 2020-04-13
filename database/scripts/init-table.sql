@@ -1,6 +1,6 @@
 CREATE TABLE users(
    id serial PRIMARY KEY,
-   username VARCHAR (50) UNIQUE NOT NULL,
+   username VARCHAR (50) NOT NULL,
    password VARCHAR (355) NOT NULL,
    email VARCHAR (355) UNIQUE NOT NULL,
    token VARCHAR (355),

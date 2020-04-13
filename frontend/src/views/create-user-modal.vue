@@ -38,6 +38,8 @@
 </template>
 
 <script>
+import { format } from 'date-fns';
+
 import { userService } from '../services';
 import { TOAST_ERROR, TOAST_SUCCESS } from '../store/modules/buefy/buefy-action-types';
 import { LOGIN_EMAIL_REQUIRED, LOGIN_PASSWORD_REQUIRED, USERNAME_REQUIRED } from '@/shared/constants';
@@ -48,13 +50,7 @@ export default {
         return {
             isModalOpen: false,
             isLoading: false,
-            user: {
-                username: '',
-                email: '',
-                password: '',
-                isActive: false,
-                isAdmin: false,
-            },
+            user: {},
             errors: {},
         };
     },
@@ -75,11 +71,12 @@ export default {
             try {
                 const result = await userService.createUser(user);
                 user.id = result.data.id;
+                user.createDate = format(new Date(), 'dd/MM/yyyy');
                 this.$emit('userCreated', user);
-                this.isModalOpen = false;
                 this.$store.dispatch(TOAST_SUCCESS, 'User has been successfully created');
-            } catch (e) {
-                this.$store.dispatch(TOAST_ERROR, e);
+                this.close();
+            } catch (err) {
+                this.$store.dispatch(TOAST_ERROR, err.data.error);
             }
             this.isLoading = false;
         },
