@@ -4,8 +4,9 @@
   "description": "n/a",
   "main": "index.js",
   "scripts": {
+    "prestart": "node migrations.js",
     "start": "node index.js",
-    "serve": "export PG_IP=localhost && node index.js"
+    "serve": "export PG_IP=localhost && node migrations.js && node index.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +16,7 @@
     "jsonwebtoken": "^8.5.1",
     "nodemailer": "^6.4.6",
     "pg-promise": "^10.4.4",
+    "postgres-migrations": "^4.0.3",
     "randomstring": "^1.1.5",
     "uWebSockets.js": "github:uNetworking/uWebSockets.js#v17.1.0"
   }
