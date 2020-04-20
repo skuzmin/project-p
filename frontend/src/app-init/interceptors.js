@@ -25,6 +25,9 @@ export default function interceptorsSetup() {
                 store.dispatch(AUTH_LOGOUT);
                 store.dispatch(TOAST_ERROR, 'You are not authorized');
             }
+            if (err.response.status === 500) {
+                store.dispatch(TOAST_ERROR, err.response.data);
+            }
             return Promise.reject(err.response);
         },
     );

@@ -60,7 +60,7 @@ export default {
                 .dispatch(AUTH_LOGIN, user)
                 .then(() => this.$router.push('/dashboard'))
                 .catch(err => {
-                    if (err.data) {
+                    if (err.data && err.data.error) {
                         this.$store.dispatch(TOAST_ERROR, err.data.error);
                     }
                 })

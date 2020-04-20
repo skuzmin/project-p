@@ -47,10 +47,7 @@ const actions = {
                         resolve();
                     }
                 })
-                .catch(e => {
-                    dispatch(AUTH_LOGOUT);
-                    reject(e);
-                });
+                .catch(e => reject(e));
         });
     },
     [AUTH_LOGOUT]: ({ commit }) => {
