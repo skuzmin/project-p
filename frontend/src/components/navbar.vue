@@ -14,6 +14,9 @@
                     <b-navbar-item tag="router-link" :to="{ path: '/users' }">
                         Users
                     </b-navbar-item>
+                    <b-navbar-item tag="router-link" :to="{ path: '/parkings' }">
+                        Parkings
+                    </b-navbar-item>
                 </b-navbar-dropdown>
             </template>
 

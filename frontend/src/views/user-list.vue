@@ -8,10 +8,14 @@
             <b-table :data="users" :per-page="itemsPerPage" default-sort="name" paginated :loading="isLoading">
                 <template slot-scope="props">
                     <b-table-column field="username" label="User" sortable>
-                        <router-link :to="`/user/${props.row.id}`">{{ props.row.username }}</router-link>
+                        <router-link :to="`/users/${props.row.id}`">{{ props.row.username }}</router-link>
                     </b-table-column>
 
                     <b-table-column field="email" label="Email" sortable width="350">{{ props.row.email }}</b-table-column>
+
+                    <b-table-column field="isActive" label="Active" width="130" sortable>
+                        <b-icon class="has-text-primary" icon="check" v-if="props.row.isActive"></b-icon>
+                    </b-table-column>
 
                     <b-table-column field="isAdmin" label="Admin" width="130" sortable>
                         <b-icon class="has-text-primary" icon="check" v-if="props.row.isAdmin"></b-icon>
@@ -40,7 +44,7 @@ import { mapGetters } from 'vuex';
 
 import { userService } from '../services';
 import store from '../store';
-import { TOAST_ERROR, LOADING } from '../store/modules/buefy/buefy-action-types';
+import { TOAST_ERROR, LOADING, TOAST_SUCCESS } from '../store/modules/buefy/buefy-action-types';
 import CreateUserModal from './create-user-modal';
 
 export default {
@@ -72,6 +76,7 @@ export default {
                     try {
                         await userService.deleteUser(user.id);
                         this.users = this.users.filter(p => p.id !== user.id);
+                        this.$store.dispatch(TOAST_SUCCESS, 'User has been deleted');
                     } catch (e) {
                         this.$store.dispatch(TOAST_ERROR, e);
                     }
@@ -92,6 +97,7 @@ export default {
                     username: u.username,
                     email: u.email,
                     isAdmin: u.is_admin,
+                    isActive: u.is_active,
                     createDate: format(new Date(u.created_on), 'dd/MM/yyyy'),
                 });
             });

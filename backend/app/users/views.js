@@ -29,7 +29,7 @@ async function getUsers(res, req) {
             .writeHeader('Content-Type', 'application/json')
             .end(JSON.stringify({ error }));
     }
-};
+}
 
 async function getUserById(res, req) {
     res.onAborted();
@@ -54,7 +54,7 @@ async function getUserById(res, req) {
             .writeHeader('Content-Type', 'application/json')
             .end(JSON.stringify({ error }));
     }
-};
+}
 
 async function activateUser(res, req) {
     res.onAborted();
@@ -182,6 +182,6 @@ function createUser(res) {
             }
         }
     });
-};
+}
 
 module.exports = views;

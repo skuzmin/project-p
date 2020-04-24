@@ -1,11 +1,14 @@
 <template>
     <div class="parking-details">
-        <b-loading :active.sync="isLoading"></b-loading>
         <section class="section">
             <h4 class="title is-4">{{ parking.name }}</h4>
             <div class="columns">
                 <div class="column is-2">Free slots:</div>
-                <div class="column is-10">{{ parking.freeSlots }}</div>
+                <div class="column is-10">{{ parking.free_slots }}</div>
+            </div>
+            <div class="columns">
+                <div class="column is-2">Total slots:</div>
+                <div class="column is-10">{{ parking.total_slots }}</div>
             </div>
             <div class="columns">
                 <div class="column is-2">Address:</div>
@@ -16,12 +19,12 @@
                 <div class="column is-10">${{ parking.price }} per hour</div>
             </div>
             <div class="columns">
-                <div class="column is-2">Additional info:</div>
-                <div class="column is-10">{{ parking.additionalInfo }}</div>
+                <div class="column is-2">Active:</div>
+                <div class="column is-10">{{ parking.is_active }}</div>
             </div>
             <div class="columns">
                 <div class="column">
-                    <b-button type="is-light" tag="router-link" to="/dashboard">Back to parking list</b-button>
+                    <b-button type="is-light" tag="router-link" to="/parkings">Back to parking list</b-button>
                 </div>
             </div>
         </section>
@@ -30,19 +33,25 @@
 
 <script>
 import { parkingService } from '../services';
+import store from '@/store';
+import { TOAST_ERROR, LOADING } from '@/store/modules/buefy/buefy-action-types';
 
 export default {
     name: 'ParkingDetails',
-    async created() {
-        this.isLoading = true;
-        this.parking = await parkingService.getParkingById(
-            this.$route.params.id,
-        );
-        this.isLoading = false;
+    async beforeRouteEnter(to, _from, next) {
+        store.dispatch(LOADING, true);
+        const { id } = to.params;
+        try {
+            const user = await parkingService.getParkingById(id);
+            next(vm => (vm.parking = user.data));
+        } catch (err) {
+            store.dispatch(TOAST_ERROR, err.data.error);
+            next(false);
+        }
+        store.dispatch(LOADING, false);
     },
     data() {
         return {
-            isLoading: false,
             parking: {},
         };
     },

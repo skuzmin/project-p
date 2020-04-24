@@ -10,7 +10,7 @@ const repository = {
     bumpLoginTimestamp,
     activateUser,
     createUser
-}
+};
 
 async function activateUser(id) {
     await db.none(`
@@ -21,7 +21,7 @@ async function activateUser(id) {
 }
 
 async function getUsers() {
-    const user = await db.any(`SELECT id, username, email, is_admin, created_on, last_login FROM users`);
+    const user = await db.any(`SELECT id, username, email, is_admin, is_active, created_on, last_login FROM users`);
     return user;
 }
 

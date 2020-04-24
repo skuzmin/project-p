@@ -18,6 +18,10 @@
                 <div class="column is-10">{{ user.isAdmin }}</div>
             </div>
             <div class="columns">
+                <div class="column is-2">Active:</div>
+                <div class="column is-10">{{ user.isActive }}</div>
+            </div>
+            <div class="columns">
                 <div class="column is-2">Create date:</div>
                 <div class="column is-10">{{ user.createDate }}</div>
             </div>
@@ -46,7 +50,8 @@ export default {
             const user = await userService.getUserById(id);
             next(vm => vm.formatData(user.data));
         } catch (err) {
-            store.dispatch(TOAST_ERROR, err);
+            store.dispatch(TOAST_ERROR, err.data.error);
+            next(false);
         }
         store.dispatch(LOADING, false);
     },

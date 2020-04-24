@@ -1,25 +1,24 @@
 import * as axios from 'axios';
 
 const getParkings = async () => {
-    try {
-        const response = await axios.get('/mocks/parkings.json');
-        return response.data;
-    } catch (error) {
-        return error;
-    }
+    return axios.get('/api/parkings');
 };
 
 const getParkingById = async id => {
-    try {
-        const response = await axios.get('/mocks/parkings.json');
-        const item = response.data.find(r => r.id === id);
-        return item;
-    } catch (error) {
-        return error;
-    }
+    return axios.get(`/api/parkings/${id}`);
+};
+
+const createParking = parking => {
+    return axios.post(`/api/parkings`, parking);
+};
+
+const deleteParking = id => {
+    return axios.delete(`/api/parkings/${id}`);
 };
 
 export const parkingService = {
     getParkings,
     getParkingById,
+    createParking,
+    deleteParking,
 };

@@ -41,22 +41,28 @@ const routes = [
         component: () => import(/* webpackChunkName: 'dashboard' */ '../views/dashboard.vue'),
     },
     {
-        path: '/parking/:id',
-        name: 'parking-details',
-        beforeEnter: authGuard,
-        component: () => import(/* webpackChunkName: 'parking' */ '../views/parking-details.vue'),
-    },
-    {
         path: '/users',
         name: 'users',
         beforeEnter: authGuard,
         component: () => import(/* webpackChunkName: 'users' */ '../views/user-list.vue'),
     },
     {
-        path: '/user/:id',
+        path: '/users/:id',
         name: 'user-details',
         beforeEnter: authGuard,
         component: () => import(/* webpackChunkName: 'users' */ '../views/user-details.vue'),
+    },
+    {
+        path: '/parkings',
+        name: 'parking-list',
+        beforeEnter: authGuard,
+        component: () => import(/* webpackChunkName: 'parkings' */ '../views/parking-list.vue'),
+    },
+    {
+        path: '/parkings/:id',
+        name: 'parking-details',
+        beforeEnter: authGuard,
+        component: () => import(/* webpackChunkName: 'parkings' */ '../views/parking-details.vue'),
     },
     {
         path: '*',
