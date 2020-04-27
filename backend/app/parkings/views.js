@@ -1,5 +1,6 @@
 const repository = require('./repository');
 const { isAuthenticated } = require('../auth/helpers');
+const { newParkingValidation } = require('./helpers');
 
 const views = {
     createParking,
@@ -71,20 +72,20 @@ function createParking(res) {
     res.onAborted();
     res.onData(async (ab) => {
         const parking = JSON.parse(Buffer.from(ab));
-        // const error = newParkingValidation(parking);
-        if (false) { // check all mandatory fields
+        const error = newParkingValidation(parking);
+        if (error) {
             res
                 .writeStatus('400 Bad Request')
                 .writeHeader('Content-Type', 'application/json')
                 .end(JSON.stringify({ error }));
         } else {
             try {
-                // const isUserExist = await repository.getUserByFieldName('email', user.email);
-                if (false) { // check if parking exists
+                const isParkingExist = await repository.getParkingByNameAndAddress(parking.name, parking.address);
+                if (isParkingExist) {
                     res
                         .writeStatus('400 Bad Request')
                         .writeHeader('Content-Type', 'application/json')
-                        .end(JSON.stringify({ error: 'User with this email already exists' }));
+                        .end(JSON.stringify({ error: 'Parking has been already added' }));
                 } else {
                     try {
                         const newParkingId = await repository.createParking(parking);

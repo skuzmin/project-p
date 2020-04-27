@@ -4,7 +4,8 @@ const repository = {
     getParkings,
     getParkingById,
     createParking,
-    deleteParkingById
+    deleteParkingById,
+    getParkingByNameAndAddress
 };
 
 async function getParkings() {
@@ -14,6 +15,11 @@ async function getParkings() {
 
 async function getParkingById(id) {
     const parking = await db.oneOrNone(`SELECT * FROM parkings WHERE id = ${id}`);
+    return parking;
+}
+
+async function getParkingByNameAndAddress(name, address) {
+    const parking = await db.oneOrNone(`SELECT * FROM parkings WHERE name='${name}' AND address='${address}'`);
     return parking;
 }
 

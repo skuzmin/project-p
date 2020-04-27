@@ -40,6 +40,7 @@
 <script>
 import { parkingService } from '../services';
 import { TOAST_ERROR, TOAST_SUCCESS } from '../store/modules/buefy/buefy-action-types';
+import { PARKING_NAME_REQUIRED, PARKING_ADDRESS_REQUIRED, PARKING_TOTAL_SLOTS_REQUIRED, PARKING_PRICE_REQUIRED } from '../shared/constants';
 
 export default {
     name: 'CreateParkingModal',
@@ -80,19 +81,19 @@ export default {
             let result = true;
             this.errors = {};
             if (!parking.name) {
-                this.errors.name = 'Name is required';
+                this.errors.name = PARKING_NAME_REQUIRED;
                 result = false;
             }
             if (!parking.address) {
-                this.errors.address = 'Address is required';
+                this.errors.address = PARKING_ADDRESS_REQUIRED;
                 result = false;
             }
             if (isNaN(parking.totalSlots)) {
-                this.errors.totalSlots = 'Please provide total slots for parking';
+                this.errors.totalSlots = PARKING_TOTAL_SLOTS_REQUIRED;
                 result = false;
             }
             if (isNaN(parking.price)) {
-                this.errors.price = 'Price is required';
+                this.errors.price = PARKING_PRICE_REQUIRED;
                 result = false;
             }
             return result;
