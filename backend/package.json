@@ -12,7 +12,7 @@
   "license": "ISC",
   "repository": "n/a",
   "dependencies": {
-    "bcrypt": "^4.0.1",
+    "bcrypt": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
     "nodemailer": "^6.4.6",
     "pg-promise": "^10.4.4",
