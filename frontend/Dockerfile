@@ -19,3 +19,4 @@ COPY ./public/ ./public/
 COPY ./src/ ./src/
 RUN npm run-script build-local
 RUN cp -a ./dist/. /usr/share/nginx/html/
+CMD ["nginx", "-g", "daemon off;"]
