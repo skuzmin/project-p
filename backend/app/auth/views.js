@@ -76,6 +76,7 @@ function register(res) {
                     email: data.email,
                     password: bcrypt.hashSync(data.password, saltRounds),
                     isActive: false,
+                    isAdmin: false,
                     token
                 };
                 const html = `
