@@ -1,4 +1,4 @@
-FROM node:13.8-stretch
+FROM node:15
 
 WORKDIR /user/share/app
 COPY package.json .
