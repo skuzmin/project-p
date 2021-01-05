@@ -10,7 +10,7 @@
     "e2e": "vue-cli-service test:e2e"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "buefy": "^0.8.20",
     "core-js": "^3.8.0",
     "date-fns": "^2.16.1",
