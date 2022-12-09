@@ -9,7 +9,7 @@ services:
         ports:
             - "9001:9001"
     db:
-        image: postgres
+        image: postgres:12
         container_name: pg_container
         restart: always
         ports:
